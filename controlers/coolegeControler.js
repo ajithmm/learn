@@ -1,9 +1,8 @@
 const path = require("path");
-const newes = require("../models/collegeModels");
+const Group1= require("../models/collegeModels");
 
 
-module.exports = 
-{
+module.exports = {
     home : async(req, res) => {
      res.render("home");   
     },
@@ -17,17 +16,23 @@ module.exports =
         // console.log("college")
         res.render("college")
     },
+Details: async(req, res) => {
+      // console.log("college")
+      const details = Group1.find({});
+      console.log(details)
+      res.render("collegeDetails",{clgs:details})
+  },
 
 
     post_college :async(req, res) => {
-        const{colleges,city,usn} = req.body;
-        console.log(colleges,city,usn);
+        const{ college,city,usn} = req.body;
+        console.log(college,city,usn);
 
-    const newCollege = new newes({colleges,city,usn });
+    const newCollege = new Group1({college,city,usn });
     try {
       await newCollege.save();
- 
-     res.render("home");
+      console.log("yeah.. you are here");
+    res.render("collegeDetails");
     } catch (err) {
       console.error(err);
       res.status(500).send("Server error cant able to proceed...better luck next time");
